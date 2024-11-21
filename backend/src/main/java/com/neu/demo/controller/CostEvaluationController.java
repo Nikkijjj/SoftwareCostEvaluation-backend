@@ -1,16 +1,17 @@
 package com.neu.demo.controller;
 
 
+import com.baidubce.qianfan.Qianfan;
+import com.baidubce.qianfan.core.auth.Auth;
+import com.baidubce.qianfan.core.builder.ChatBuilder;
 import com.neu.demo.biz.CostEvaluationBiz;
 import com.neu.demo.entity.GSC;
 import com.neu.demo.entity.Project;
 import com.neu.demo.entity.UFP;
 import com.neu.demo.entity.S;
-import com.neu.demo.mapper.CostEvaluationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
+import com.baidubce.qianfan.model.chat.ChatResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -218,6 +219,35 @@ public class CostEvaluationController {
             result.put("msg", "数据库中无相应S信息");
         }
         return result;
+    }
+
+    //百度千帆大模型调用接口
+    private static final String APIKey = "1DSSKcUDZu8I3SbLCMOgCgoP";
+    private static final String SecretKey = "7q09iN2VMb0qqh3SpZ4wjMLhOwxAJ6rn";
+
+    private static Qianfan qianfan = new Qianfan(Auth.TYPE_OAUTH,APIKey, SecretKey);
+
+    @RequestMapping("/costEvaluation/ai/generate")
+    public Map springChatAI(@RequestParam("problem") String problem){
+        Map<String, Object> result = new HashMap<>();
+        String answer = null;
+        try {
+            answer = chat(problem);
+            result.put("isOk", true);
+            result.put("answer", answer);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("isOk", false);
+            result.put("msg", e);
+        }
+        return result;
+    }
+    private static String chat(String problem) {
+        ChatBuilder builder = qianfan.chatCompletion()
+                .model("ERNIE-Speed-8K");
+        builder.addMessage("user",problem);
+        ChatResponse response = builder.execute();
+        return response.getResult();
     }
 
 }
