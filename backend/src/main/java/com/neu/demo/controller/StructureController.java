@@ -21,8 +21,6 @@ public class StructureController {
         this.structureBiz = structureBiz;
     }
 
-    //所有的方法，传入参数都没加注解，自行调试、加注解
-
     //获取节点的父节点（获取节点的parent_id，再根据id查到父节点）
     @RequestMapping("/structure/getParent")
     public Map getStructureParent(String module_id) {
@@ -103,14 +101,10 @@ public class StructureController {
         return map;
     }
 
-    //添加新节点(模块id由项目id和三位随机数字拼接而成，后面的功能点变量初始设置为0)
+    //添加新节点(模块id由项目id拼接而成，后面的功能点变量初始设置为0)
     @RequestMapping("/structure/addModule")
     public Map addModule(@RequestParam("parent_id") String parent_id, @RequestParam("project_id") String project_id,
                          @RequestParam("module_name") String module_name, @RequestParam("module_desc") String module_desc) {
-        System.out.println("parent_id:"+parent_id);
-        System.out.println("project_id:"+project_id.getClass());
-        System.out.println("module_name:"+module_name);
-        System.out.println("module_desc:"+module_desc);
         Structure newModule = new Structure();
         newModule.setParent_id(parent_id);
         newModule.setProject_id(project_id);
