@@ -4,6 +4,7 @@ public class Project {
     String project_id;
     String project_name;
     String project_info;
+    String begin;
     String ddl;
     String company;
     String status;
@@ -18,6 +19,7 @@ public class Project {
     int elf_num;
     String auditStatus;
     String auditSuggest;
+    String url;
 
     public Project() {
     }
@@ -156,5 +158,21 @@ public class Project {
 
     public void setAuditStatus(String auditStatus) {
         this.auditStatus = auditStatus;
+    }
+
+    public String getBegin() {
+        return begin;
+    }
+
+    public void setBegin(String begin) {
+        this.begin = begin;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
