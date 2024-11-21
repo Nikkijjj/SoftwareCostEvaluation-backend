@@ -30,6 +30,16 @@ public class ProjectBiz {
         return this.projectMapper.getProjectsByCompany(company);
     }
 
+    //更新项目的ufp, ei_num, eo_num, eq_num, ilf_num, elf_num
+    public int updateValues(String project_id, int ufp, int ei_num, int eo_num, int eq_num, int ilf_num, int elf_num) {
+        return this.projectMapper.updateUFP(project_id, ufp, ei_num, eo_num, eq_num, ilf_num, elf_num);
+    }
+
+    //更新项目的step和status
+    public int updateStep(String project_id, double step, String project_status) {
+        return this.projectMapper.updateStep(project_id, step,project_status);
+    }
+
     public List<Project> selectProjectsByName(String project_name) {
         List<Project> projects = projectMapper.getProjectByName(project_name);
         System.out.println(projects);
